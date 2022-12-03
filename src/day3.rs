@@ -17,6 +17,31 @@ fn day3_part1() {
     }
     println!("{count}");
 }
+
+#[test]
+fn day3_part2() {
+    let input = include_str!("../resources/day3.txt");
+    let prios = create_char_array().into_iter().collect::<String>();
+    let mut count = 0;
+
+    for line in input.lines().collect::<Vec<&str>>().chunks(3) {
+        let mut char_r = None;
+        'outer: for c1 in line[0].chars() {
+            for c2 in line[1].chars() {
+                for c3 in line[2].chars() {
+                    if c1 == c2 && c2 == c3 {
+                        char_r = Some(c1);
+                        break 'outer;
+                    }
+                }
+            }
+        }
+        count += prios.find(char_r.unwrap()).unwrap() + 1;
+    }
+    println!("{count}");
+    assert_eq!(count, 2510);
+}
+
 // used in test
 #[allow(dead_code)]
 fn create_char_array() -> Vec<char> {
